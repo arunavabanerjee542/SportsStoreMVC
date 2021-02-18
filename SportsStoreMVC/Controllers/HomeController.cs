@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SportsStoreMVC.Models;
+using SportsStoreMVC.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,11 +22,22 @@ namespace SportsStoreMVC.Controllers
         }
 
         public  int _pageSize = 3;
-        public IActionResult Index(int pagesize =1)
+        public ViewResult Index(int pagesize =1)
         {
             IQueryable<Product> products = _sportsRepository.Products
                 .Skip((pagesize - 1) * _pageSize).Take(_pageSize);
-            return View(products);
+            return View(new ProductViewModel()
+            {
+                Products = products,
+                PageInfo = new PageInfo()
+                {
+                    CurrentPage = pagesize,
+                    ItemsPerPage = _pageSize,
+                    TotalItems = _sportsRepository.Products.Count()
+                }
+
+            }) ;
+            
         }
 
         public IActionResult Privacy()
