@@ -10,6 +10,6 @@ namespace SportsStoreMVC.ViewModel
     {
         public IQueryable<Product> Products { get; set; }
         public PageInfo PageInfo { get; set; }
-
+        public string CurrentCategory { get; set; }
     }
 }

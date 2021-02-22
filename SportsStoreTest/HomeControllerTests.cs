@@ -13,6 +13,7 @@ namespace SportsStoreTest
 {
      public class HomeControllerTests
     {
+        /*
         [Fact]
         public void Index_IfProductValid_ReturnTrue()
         {
@@ -27,7 +28,7 @@ namespace SportsStoreTest
 
 
             IEnumerable<Product> result =
-            (home.Index() as ViewResult).ViewData.Model
+            (home.Index(null) as ViewResult).ViewData.Model
               as IEnumerable<Product>;
 
 
@@ -52,7 +53,7 @@ namespace SportsStoreTest
 
 
             IEnumerable<Product> result =
-            (home.Index(2) as ViewResult).ViewData.Model
+            (home.Index(null,2) as ViewResult).ViewData.Model
               as IEnumerable<Product>;
 
             Assert.Equal("P4", result.ToArray()[0].Name);
@@ -81,20 +82,43 @@ namespace SportsStoreTest
 
 
             //Act
-            var x = home.Index(2).ViewData.Model as ProductViewModel;
+            var x = home.Index(null,2).ViewData.Model as ProductViewModel;
 
             //Assert
             PageInfo p = x.PageInfo;
-            Assert.Equal(5,p.TotalItems);
-
-
-
-
+            Assert.Equal(5, p.TotalItems);
 
 
         }
+        */
 
 
+        [Fact]
+        public void Index_WhenCategorySpecified_ReturnsProductsOfThatCategory()
+        {
+            var mock = new Mock<ISportsRepository>();
+            mock.Setup(p => p.Products).Returns(
+                (new List<Product>()
+                {
+                     new Product {ProductID = 1, Name = "P1",Category="a"},
+               new Product {ProductID = 2, Name = "P2",Category="a"},
+               new Product {ProductID = 3, Name = "P3",Category="b"},
+             new Product {ProductID = 4, Name = "P4",Category="c"},
+                new Product {ProductID = 5, Name = "P5",Category="a"}
+
+
+                }).AsQueryable<Product>()
+                ) ;
+            var home = new HomeController(mock.Object);
+
+
+           var model = home.Index("b").ViewData.Model as ProductViewModel;
+
+
+
+            Assert.Equal(1, model.Products.Count());
+
+        }
 
 
 

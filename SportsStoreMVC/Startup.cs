@@ -51,11 +51,44 @@ namespace SportsStoreMVC
 
             app.UseAuthorization();
 
+            
+
+
+
+
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute("catpage",
+                    "{category}/page{pagesize:int}",
+                   new { Controller = "Home", Action = "Index", pagesize = 1 }
+                    );
+
+                endpoints.MapControllerRoute("category",
+                   "{category}",
+                  new { Controller = "Home", Action = "Index", pagesize = 1 }
+                   );
+
+                endpoints.MapControllerRoute("page",
+                   "page{pagesize:int}",
+                  new { Controller = "Home", Action = "Index", pagesize = 1 }
+                   );
+                
+                endpoints.MapControllerRoute("pagnation",
+                    "Products/page{pagesize:int}",
+                    new { Controller = "Home", Action = "Index", pagesize = 1 }
+
+                    );
+                
+
+                endpoints.MapDefaultControllerRoute();
+                
+                /*
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                */
+                
             });
         }
     }

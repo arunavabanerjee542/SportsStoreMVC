@@ -25,8 +25,17 @@ namespace SportsStoreMVC.Infrastructure
         [HtmlAttributeNotBound]
         public ViewContext CurrentContext { get; set; }
 
-        public string Action { get; set; }
+        public string PageAction { get; set; }
         public PageInfo PageModel { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix ="page-url-")]
+        public Dictionary<string, object> PageLinkUrls { get; set; }
+            = new Dictionary<string, object>();
+        public bool PageClassesEnabled { get; set; } = false;
+        public string PageClass { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
+
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -35,7 +44,14 @@ namespace SportsStoreMVC.Infrastructure
             for (int i=1;i<=PageModel.TotalPages;i++)
             {
                 var tagRef = new TagBuilder("a");
-                tagRef.Attributes["href"] = url.Action(Action, new { pagesize = i });
+                PageLinkUrls["pagesize"] = i;
+                tagRef.Attributes["href"] = url.Action(PageAction, PageLinkUrls);
+
+                if (PageClassesEnabled)
+                {
+                    tagRef.AddCssClass(PageClass);
+                    tagRef.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                }
                 tagRef.InnerHtml.Append(i.ToString());
                 tagDiv.InnerHtml.AppendHtml(tagRef);
 

@@ -22,9 +22,10 @@ namespace SportsStoreMVC.Controllers
         }
 
         public  int _pageSize = 3;
-        public ViewResult Index(int pagesize =1)
+        public ViewResult Index(string category,int pagesize =1)
         {
             IQueryable<Product> products = _sportsRepository.Products
+                .Where(p=> p.Category == null || p.Category == category)
                 .Skip((pagesize - 1) * _pageSize).Take(_pageSize);
             return View(new ProductViewModel()
             {
@@ -34,7 +35,8 @@ namespace SportsStoreMVC.Controllers
                     CurrentPage = pagesize,
                     ItemsPerPage = _pageSize,
                     TotalItems = _sportsRepository.Products.Count()
-                }
+                },
+                CurrentCategory = category
 
             }) ;
             
