@@ -57,6 +57,7 @@ namespace SportsStoreMVC.Infrastructure
 
             }
 
+
             output.Content.AppendHtml(tagDiv.InnerHtml);
 
         }
