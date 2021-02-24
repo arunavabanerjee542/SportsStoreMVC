@@ -122,6 +122,79 @@ namespace SportsStoreTest
 
 
 
+        [Fact]
+        public void Index_WhenCategoryProvided_ReturnsPagenumberBasedonCategoryItems()
+        {
+            var mock = new Mock<ISportsRepository>();
+            mock.Setup(p => p.Products).Returns(
+
+                (new List<Product>()
+                {
+
+      new Product {ProductID = 1, Name = "P1", Category =
+"Cat1"},
+new Product {ProductID = 2, Name = "P2", Category =
+"Cat2"},
+new Product {ProductID = 3, Name = "P3", Category =
+"Cat1"},
+new Product {ProductID = 4, Name = "P4", Category =
+"Cat2"}
+
+                }).AsQueryable()
+                ) ;
+
+
+            var home = new HomeController(mock.Object);
+
+
+            Func<ViewResult, ProductViewModel> result =
+                res => res?.ViewData?.Model as ProductViewModel;
+
+            int? r1 = result(home.Index("Cat1"))?.PageInfo?.TotalItems;
+
+            Assert.Equal(2, r1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

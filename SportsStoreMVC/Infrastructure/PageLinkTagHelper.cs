@@ -56,16 +56,9 @@ namespace SportsStoreMVC.Infrastructure
                 tagDiv.InnerHtml.AppendHtml(tagRef);
 
             }
-
-
             output.Content.AppendHtml(tagDiv.InnerHtml);
 
         }
-
-
-
-
-
 
     }
 }
