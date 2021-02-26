@@ -26,16 +26,19 @@ namespace SportsStoreMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddDbContext<SportsStoreDb>(opt => opt.UseSqlServer
             (Configuration["ConnectionStrings:SportsStoreDbConnection"]));
             services.AddScoped<ISportsRepository, SportsRepository>();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,SportsStoreDb appDb)
         {
             if (env.IsDevelopment())
-            {
+            { 
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -46,28 +49,26 @@ namespace SportsStoreMVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            appDb.Database.EnsureCreated();
+            app.UseSession();
+            appDb.Database.EnsureCreated();         
             app.UseRouting();
 
             app.UseAuthorization();
 
             
-
-
-
-
             app.UseEndpoints(endpoints =>
             {
-
+                
                 endpoints.MapControllerRoute("catpage",
                     "{category}/page{pagesize:int}",
                    new { Controller = "Home", Action = "Index", pagesize = 1 }
                     );
-
+                
                 endpoints.MapControllerRoute("category",
                    "{category}",
                   new { Controller = "Home", Action = "Index", pagesize = 1 }
                    );
+                
 
                 endpoints.MapControllerRoute("page",
                    "page{pagesize:int}",
@@ -80,15 +81,17 @@ namespace SportsStoreMVC
 
                     );
                 
+                
 
                 endpoints.MapDefaultControllerRoute();
-                
+                endpoints.MapRazorPages();
+
                 /*
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 */
-                
+
             });
         }
     }

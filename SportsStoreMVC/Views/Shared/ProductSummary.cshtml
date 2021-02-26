@@ -13,4 +13,12 @@
     <div class="card-text p-1">@Model.Description</div>
 </div>
 
+<form asp-page="/Cart" method="post">
+    <input type="hidden" asp-for="@Model.ProductID" />
+    <input type="hidden" name="myUrl" 
+           value="@ViewContext.HttpContext.Request.GetPathAndQuery()" />
+    <button class="btn-secondary" type="submit" >Add To Cart</button>
+</form>
+
+
 
