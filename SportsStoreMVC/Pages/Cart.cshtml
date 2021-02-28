@@ -3,8 +3,7 @@
 @{
     Layout = "_CartLayout";
 }
-<h1> MY CART </h1>
-<h2>Your cart</h2>
+
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -18,7 +17,7 @@
         @foreach (var line in Model.Cart.MyCart)
         {
             <tr>
-                <td class="text-center">@line.ItemId</td>
+                <td class="text-center">@line.Quantity</td>
                 <td class="text-left">@line.Product.Name</td>
                 <td class="textright">@line.Product.Price.ToString("c")</td>
                 <td class="text-right">

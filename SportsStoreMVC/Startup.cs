@@ -49,8 +49,9 @@ namespace SportsStoreMVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+           
+            appDb.Database.EnsureCreated();
             app.UseSession();
-            appDb.Database.EnsureCreated();         
             app.UseRouting();
 
             app.UseAuthorization();

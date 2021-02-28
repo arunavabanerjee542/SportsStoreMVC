@@ -7,7 +7,7 @@ namespace SportsStoreMVC.Models
 {
     public class Cart
     {
-        public List<Item> MyCart = new List<Item>();
+        public List<Item> MyCart { get; set; }  = new List<Item>();
 
         public void AddToCart(Product product,int quantity)
         {
