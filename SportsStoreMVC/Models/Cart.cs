@@ -9,7 +9,7 @@ namespace SportsStoreMVC.Models
     {
         public List<Item> MyCart { get; set; }  = new List<Item>();
 
-        public void AddToCart(Product product,int quantity)
+        public virtual void AddToCart(Product product,int quantity)
         {
           var x =MyCart.Where(p=> p.Product.ProductID == product.ProductID).SingleOrDefault();
 
@@ -26,18 +26,18 @@ namespace SportsStoreMVC.Models
         }
 
 
-        public decimal CalculateTotalCost()
+        public virtual decimal CalculateTotalCost()
         {
            return  MyCart.Sum(p => p.Product.Price * p.Quantity);
         }
 
-        public void Remove(Product product)
+        public virtual void Remove(Product product)
         {
                 MyCart
                 .RemoveAll(p => p.Product.ProductID == product.ProductID);
         }
 
-        public bool DoesProductExists(int productId)
+        public virtual bool DoesProductExists(int productId)
         {
             return MyCart
                    .Any(p => p.Product.ProductID == productId);

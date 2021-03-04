@@ -12,9 +12,10 @@ namespace SportsStoreMVC.Pages
     public class CartModel : PageModel
     {
         private ISportsRepository _sportsRepository;
-        public CartModel(ISportsRepository sportsRepository)
+        public CartModel(ISportsRepository sportsRepository , Cart cart)
         {
             _sportsRepository = sportsRepository;
+            Cart = cart;
         }
 
         public string MyUrl { get; set; }
@@ -24,20 +25,27 @@ namespace SportsStoreMVC.Pages
         public void OnGet(string myUrl)
         {
             MyUrl = myUrl ?? "/";
+            /*
             Cart = HttpContext.Session.GetJsonObj<Cart>("cart") ??
             new Cart();
+            */
 
         }
 
         public IActionResult OnPost(int ProductId , string myUrl)
         {
+            /*
             Cart = 
                 HttpContext.Session.GetJsonObj<Cart>("cart");
+            */
 
             var product = _sportsRepository.Products
                              .Where(p => p.ProductID == ProductId)
                              .SingleOrDefault();
 
+            Cart.AddToCart(product, 1);
+
+/*
             if (Cart != null)
             {
                 Cart.AddToCart(product, 1);
@@ -50,6 +58,7 @@ namespace SportsStoreMVC.Pages
                 Cart.AddToCart(product, 1);
                 HttpContext.Session.SetJsonObj("cart", Cart);
             }
+*/
 
             return RedirectToPage(new { MyUrl = myUrl });
 
