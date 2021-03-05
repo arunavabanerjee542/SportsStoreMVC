@@ -63,5 +63,26 @@ namespace SportsStoreMVC.Pages
             return RedirectToPage(new { MyUrl = myUrl });
 
         }
+
+
+        public IActionResult OnPostRemove(int ProductId , string myUrl)
+        {
+            Cart.Remove(Cart
+                       .MyCart
+                       .First(p => p.Product.ProductID == ProductId)
+                       .Product);
+
+            return RedirectToPage(new { myUrl = myUrl });
+            
+
+        }
+
+
+
+
+
+
+
+
     }
 }
