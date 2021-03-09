@@ -1,8 +1,19 @@
 ﻿@model Cart
 
-@if(Model.MyCart.Count() > 0)
-{
-    @Model.MyCart.Sum(c => c.Quantity);
-      @Model.CalculateTotalCost();
-}
+<div class="">
+    @if (Model.MyCart.Count() > 0)
+    {
+        <small class="navbar-text">
+            <b>Your cart:</b>
+            @Model.MyCart.Sum(x => x.Quantity) item(s)
+            @Model.CalculateTotalCost().ToString("c")
+        </small>
+
+    <a class="btn btn-sm btn-secondary navbar-btn" asp-page="/Cart"
+       asp-route-myUrl="@ViewContext.HttpContext.Request.GetPathAndQuery()">
+        <i class="fa fa-shopping-cart"></i>
+    </a>
+    }
+</div>
+
 

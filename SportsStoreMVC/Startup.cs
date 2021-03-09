@@ -31,6 +31,7 @@ namespace SportsStoreMVC
             services.AddDbContext<SportsStoreDb>(opt => opt.UseSqlServer
             (Configuration["ConnectionStrings:SportsStoreDbConnection"]));
             services.AddScoped<ISportsRepository, SportsRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<Cart>
                 (serviceProvider => SessionCart.GetCart(serviceProvider));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
