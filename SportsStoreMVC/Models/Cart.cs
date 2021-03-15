@@ -43,8 +43,7 @@ namespace SportsStoreMVC.Models
                    .Any(p => p.Product.ProductID == productId);
         }
 
-
-
+        public virtual void Clear() => MyCart.Clear();
 
 
     }

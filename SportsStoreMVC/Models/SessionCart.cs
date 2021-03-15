@@ -41,7 +41,15 @@ namespace SportsStoreMVC.Models
             Session.SetJsonObj("cart", this);
         }
 
-
+        public override void Clear()
+        {
+            base.Clear();
+            Session.Remove("cart");
+        }
 
     }
+
+
+
 }
+

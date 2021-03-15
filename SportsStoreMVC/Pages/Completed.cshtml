@@ -2,4 +2,14 @@
 @model SportsStoreMVC.Pages.CompletedModel
 @{
 }
-<h1> THANK YOU VISIT AGAIN </h1>
+<div class="text-center">
+    <p> THANK YOU FOR PLACING ORDER ID #@orderId</p>
+    <a class="btn-secondary" asp-controller="Home" asp-action="Index"> Return To Store</a>
+</div>
+
+@functions{
+
+    [BindProperty]
+    public int orderId { get; set; }
+
+}

@@ -9,8 +9,7 @@ namespace SportsStoreMVC.Pages
 {
     public class CompletedModel : PageModel
     {
-        [BindProperty]
-        public int OrderId { get; set; }
+        
         public void OnGet()
         {
              

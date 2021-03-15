@@ -29,10 +29,13 @@ namespace SportsStoreMVC.Controllers
             if (_cart.MyCart.Count() == 0)
                 ModelState.AddModelError("", " NO ITEMS IN CART ");
 
-            if(ModelState.IsValid)
+           
+
+            if (true)
             {
                 order.Lines = _cart.MyCart.ToList();
                 _orderRepository.SaveOrder(order);
+                _cart.Clear();
                 return RedirectToPage("/Completed", new { orderId = order.OrderID });
             }
             return View();

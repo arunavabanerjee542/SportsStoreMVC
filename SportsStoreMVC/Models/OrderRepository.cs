@@ -20,6 +20,8 @@ namespace SportsStoreMVC.Models
 
         public void SaveOrder(Order order)
         {
+            _context.AttachRange(order.Lines.Select(p => p.Product));
+
             _context.Orders.Add(order);
             _context.SaveChanges();
         }
